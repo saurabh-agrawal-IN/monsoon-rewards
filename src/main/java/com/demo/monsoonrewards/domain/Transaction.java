@@ -2,6 +2,7 @@ package com.demo.monsoonrewards.domain;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,10 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="TRANSACTION_TABLE")
@@ -24,8 +24,9 @@ public class Transaction {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="user_id", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="user_id", nullable = false, referencedColumnName = "id")
+    @JsonBackReference
     private User user;
     
     private Double amount;
@@ -33,8 +34,9 @@ public class Transaction {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
     private Date date;
     
-    @OneToOne(mappedBy = "transaction", fetch = FetchType.EAGER)
-    @Cascade(CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="reward_id", nullable = false, referencedColumnName = "id")
+    @JsonIgnore
     private Reward reward;
     
     public Transaction() {
@@ -55,7 +57,7 @@ public class Transaction {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
 	public User getUser() {
 		return user;
 	}

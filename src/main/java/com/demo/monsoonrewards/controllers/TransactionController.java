@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.demo.monsoonrewards.common.CustomException;
+import com.demo.monsoonrewards.common.ErrorCodes;
 import com.demo.monsoonrewards.domain.Transaction;
 import com.demo.monsoonrewards.services.TransactionService;
 
@@ -40,9 +42,24 @@ public class TransactionController {
     public List<Transaction> getTransactionsByUserId(@PathVariable("id") Long id) {
         return transactionService.getTransactionsByUserId(id);
     }
-    
+    /**
+     * 
+     * @param fromMonth a valid number from 01 to 12
+     * @param toMonth a valid number from 01 to 12
+     * @return
+     */
     @GetMapping(path = "from/{from}/to/{to}")
     public List<Transaction> getTransactionsForPeriod(@PathVariable("from") String fromMonth, @PathVariable("to") String toMonth) {
+    	if (Integer.parseInt(fromMonth) > Integer.parseInt(toMonth)) {
+    		throw new CustomException(
+    			ErrorCodes.MONTH_RANGE_ERROR,
+    			"Invalid Month Range",
+    			"You've entered invalid range of months",
+    			"From Month < To Month",
+    			"Please enter valid month span"
+    		);
+    	}
+
         return transactionService.getTransactionsForPeriod(fromMonth, toMonth);
     }
 
@@ -55,5 +72,4 @@ public class TransactionController {
     public Transaction updateTransaction(@PathVariable("id") Long id, @RequestBody Transaction transaction) {
         return transactionService.updateTransaction(id, transaction);
     }
-
 }

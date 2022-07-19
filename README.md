@@ -56,3 +56,31 @@ To run the unit tests:
 6. Select Run as 'JUnit Test'
 
 **Note:** For development purpose the Advanced Rest Client has been used. 
+
+## Steps to Run Program:
+
+1. Got to project directory.
+2. Start the Spring boot application - mvn spring-boot:run;
+3. Create new user using below:
+	URL: http://localhost:8080/monsoon-rewards/v1/users/
+	Method: POST
+	Payload:
+	```json
+		{
+			"name": "Saurabh"
+		}
+	```
+4. Create at least 2-3 transaction.
+		5. And fire next APIs and check.
+			Payload:
+			```json
+		{
+		  "user": {
+		    "name": "Saurabh",
+		    "id": "1"
+		  },
+		  "amount": "3278",
+		  "date": "07/14/2022"
+}
+	```
+

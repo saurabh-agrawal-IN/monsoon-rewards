@@ -1,22 +1,25 @@
 package com.demo.monsoonrewards.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="REWARD_TABLE")
 public class Reward {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@JsonIgnore
 	private Long id;
 	
-    @OneToOne
-    @JoinColumn(name = "transaction_id")
+	@OneToOne(cascade={CascadeType.REMOVE, CascadeType.MERGE}, fetch=FetchType.EAGER, mappedBy="reward", orphanRemoval=true)
     private Transaction transaction;
     
     private Long points;

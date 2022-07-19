@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,7 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
+	@Transactional
 	public Transaction addTransaction(final Transaction transaction) {
 		User user = null;
 		if (transaction.getUser() != null) {
@@ -42,6 +45,7 @@ public class TransactionServiceImpl implements TransactionService {
 		Double transAmount = transaction.getAmount();
 		Double numberOfRewards = calculateRewards(transAmount, 1, 1);
 		Reward reward = new Reward(numberOfRewards.longValue());
+		reward.setTransaction(transaction);
 		transaction.setReward(reward);
 		Transaction transactionDb = transactionRepository.save(transaction);
 		user.getTransactions().add(transactionDb);
@@ -68,8 +72,7 @@ public class TransactionServiceImpl implements TransactionService {
 
 	@Override
 	public List<Transaction> getTransactionsForPeriod(final String fromMonth, final String toMonth) {
-		// TODO Auto-generated method stub
-		return null;
+		return transactionRepository.findTransactionsForPeriod(fromMonth, toMonth);
 	}
 
 	@Override

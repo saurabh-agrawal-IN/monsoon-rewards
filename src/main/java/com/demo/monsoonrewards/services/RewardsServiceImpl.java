@@ -34,7 +34,6 @@ public class RewardsServiceImpl implements RewardsService {
 
 	@Override
 	public List<Reward> getMonthlyRewardsPerUser() {
-		// TODO Auto-generated method stub
-		return null;
+		return rewardsRepository.findMonthlyRewardsPerUser();
 	}
 }

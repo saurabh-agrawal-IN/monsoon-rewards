@@ -3,12 +3,16 @@ package com.demo.monsoonrewards.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="USER_TABLE")
@@ -19,7 +23,8 @@ public class User {
 
 	private String name;
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(cascade={CascadeType.REMOVE, CascadeType.MERGE}, fetch=FetchType.EAGER, mappedBy="user", orphanRemoval=true)
+	@JsonManagedReference
 	private List<Transaction> transactions = new ArrayList<Transaction>();
 	
 	public User() {
