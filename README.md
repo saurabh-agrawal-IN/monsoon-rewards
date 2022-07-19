@@ -65,15 +65,15 @@ To run the unit tests:
 	URL: http://localhost:8080/monsoon-rewards/v1/users/
 	Method: POST
 	Payload:
-	```json
+	
 		{
 			"name": "Saurabh"
 		}
-	```
-4. Create at least 2-3 transaction.
-		5. And fire next APIs and check.
-			Payload:
-			```json
+4. Create at least 2-3 transaction:
+	URL:http://localhost:8080/monsoon-rewards/v1/transactions/
+	Method: POST
+	Payload:
+
 		{
 		  "user": {
 		    "name": "Saurabh",
@@ -81,6 +81,6 @@ To run the unit tests:
 		  },
 		  "amount": "3278",
 		  "date": "07/14/2022"
-}
-	```
+		}
+
 
