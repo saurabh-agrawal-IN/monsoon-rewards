@@ -13,5 +13,5 @@ public interface RewardsService {
 	
 	Optional<Reward> getRewardById(final Long id);
 
-	List<Reward> getMonthlyRewardsPerUser();
+	List<String> getMonthlyRewardsPerUser();
 }

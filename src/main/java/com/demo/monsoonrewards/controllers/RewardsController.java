@@ -22,7 +22,7 @@ public class RewardsController {
 	}
 	
     @GetMapping(path = "summary/")
-    public List<Reward> getMonthlyRewardsPerUser() {
+    public List<String> getMonthlyRewardsPerUser() {
     	return rewardsService.getMonthlyRewardsPerUser();
     }
 }

@@ -33,7 +33,7 @@ public class RewardsServiceImpl implements RewardsService {
 	}
 
 	@Override
-	public List<Reward> getMonthlyRewardsPerUser() {
+	public List<String> getMonthlyRewardsPerUser() {
 		return rewardsRepository.findMonthlyRewardsPerUser();
 	}
 }

@@ -30,5 +30,5 @@ public interface RewardsRepository extends CrudRepository<Reward, Long> {
 			+ "        MONTH(T.DATE)",
 			nativeQuery = true
 		)
-	List<Reward> findMonthlyRewardsPerUser();
+	List<String> findMonthlyRewardsPerUser();
 }
